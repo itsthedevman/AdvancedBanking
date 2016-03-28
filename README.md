@@ -1,51 +1,101 @@
 # Advance Banking for Exile
 ###### Made by Shix and WolfkillArcadia
-Advance Banking is a complete rewrite of Exile's default money system. It separates Exile Money into a wallet and a personal bank making money a more valuable object. This, in turn, creates a more realistic survival scenario.
+Advance Banking is a complete rewrite of Exile's default money system. It separates Exile Money into a wallet and a bank, making money a more valuable object. This, in turn, creates a more realistic survival scenario.
 
 ---
 
 ### Features
-* Brand new banking system
-* Two different ways of storing money
-* Personal bank, secure and untouchable
-* Wallet, death is going to become rich
-* Custom Prisoner ID cards when examining wallets
-* Brand new XM8 that shows wallet, personal bank, and shared bank[SoonTM]
-* Custom ATMs that are spread all over the map
-* Deposit, withdrawal, or transfer money to other players
-* Completely rewritten to use Exile's security
-* Extra: Commands to let other scripts add and remove from players wallets
+* Brand new physical money system
+* Splits your money into a wallet and bank
+* Wallet: Used to purchase items/weapons/vehicles. Drops when you die (Appears as a suitcase)
+* Bank: Safe and secure, accessible at ATMs
+* Secure and fast, compatible with 99% of scripts out there.
 
 ---
 
-#### Server Owners:
-Advanced Banking is coded to make the transition from default Exile money system to Advanced Banking. No database wipes are required, as that it moves the players current Exile Money to their personal bank accounts. Even works with "10,000 starter money"!
-
 #### Changing ATMs
-Currently the ATMs are placed for Altis, and are controlled via AdvBanking_Server\code\ExileServer_banking_map_placeATM.sqf. This output is from M3Editor and can easily be adapted to any map. If you would like to share your ATM placement, please pass the files to us and we will update the github.
+Currently the ATMs are placed for Altis, Namalsk, and Chernarus. Placement is controlled clientside via **AdvancedBanking\functions\ExileClient_banking_map_placeATM.sqf**. This output is from M3Editor and can easily be adapted to any map. If you would like to share your ATM placement, please pass the files to us and we will update the github.
 
 ---
 
 ### Roadmap
 * Version 1: Initial release
 * Version 2: Re-write awesomeness!
-* Version 3:
-    * Shared Banking
-        * Another bank account
-        * Invite other players to this account
-        * Great for parties!
-    * Bug fixes
+* Version 3: Brand New GUI plus framework changes
+* Version 4: Surprises for the new physical money in Exile :)
 
 ---
 
 ### Installation
-<br>
-**BEFORE INSTALLING: BACK UP ALL MISSION FILES, SERVER FILES, AND DATABASE**
+Advanced Banking has two different ways of installing it.<br>
+**BEFORE INSTALLING: BACK UP ALL MISSION FILES, SERVER FILES, AND DATABASE**<br>
+**RUN ON A TEST SERVER TO MAKE SURE EVERYTHING IS CORRECT BEFORE YOU LAUNCH TO LIVE SERVER**
 
-Instructions: [Here](https://github.com/WolfkillArcadia/AdvancedBanking/blob/master/FreshServerInstallation.md)<br><br>
+If you haven't changed any of the following files, follow these instructions: [Here](https://github.com/WolfkillArcadia/AdvancedBanking/blob/master/FreshServerInstallation.md)<br><br>
+**-- Server --**
 
-### Disclaimer
-Everything offered in this repository is offered with NO WARRANTY. We am not responsible for any damages these files may cause either that being physical, emotional, or anything in between. We am not responsible if these files run off with your wife or husband or happens to kill your dog. We do offer support for any bugs, features, or setup that we have added to this server/mission files. If you have any issues or have any questions, please comment on the Exile Forums post or open an issue on Github
+* ExileServer_object_player_createBambi.sqf
+* ExileServer_object_player_database_load.sqf
+* ExileServer_object_player_sendStatsUpdate.sqf
+* ExileServer_object_player_event_onMpKilled.sqf
+* ExileServer_system_network_dispatchIncomingMessage.sqf
+* ExileServer_system_trading_network_sendMoneyRequest.sqf
+
+**-- Client --**
+
+* ExileClient_gui_xm8_slide_apps_onOpen.sqf
+* ExileClient_gui_xm8_slide_players_onOpen.sqf
+
+If you **have** changed any of the above files, follow these instructions: [Here](https://github.com/WolfkillArcadia/AdvancedBanking/blob/master/ModdedServerInstallation.md)<br><br>
+
+**-- Upgrading from 2.4 to 3 --**<br>
+[Instructions Here](https://github.com/WolfkillArcadia/AdvancedBanking/blob/master/Update2.4to3.md)<br><br>
+
+---
+
+### Changelog
+Version 3 ()
+* Brand new GUI design, courtesy of Mr. White. :)
+* Rewrote to use pre-existing variables (Removes need for half of rewrites)
+* Moved wallet drop to suitcase instead of player. (Should take care of ArmA cleanup issues)
+* Removed need for compatibility unless accessing bank money
+* Added config options on server for Fresh servers or servers coming from previous versions (Database cleanup)
+* Moved ATMs spawning to client side so addAction could be used instead of relying on InteractionMenus (Takes care of not getting ATM scroll option issue)
+* Small bug fixes and code clean up
+
+Version 2.4 (10/03/2016)
+* Updated base files to Pomelo
+* Disabled Text box in XM8 for transferring
+* Forced ATM update on transfer
+* Moved wallet drop to player's body instead of money pile
+* Added ATM placement for Namalsk and Chernarus
+
+---
+
+### Compatibility
+Previous versions of Advanced Banking required tweaks to other scripts. These changes are no longer required as that Advanced Banking ties into Exile's default money. (Unless to use the bank side)
+
+---
+
+### FAQ
+*XXXX error is happening, halp!*
+* Please make sure you are up to date
+* Enable debug message by editing AdvBanking_Server/bootstrap/fn_preInit.sqf and set ADVBANKING_SERVER_DEBUG to true. For the client, edit AdvancedBanking/AdvBanking_Client_Init.sqf and set ADVBANKING_CLIENT_DEBUG to true
+* Test again then post your full server and client RPT
+
+*Can you add XXXX feature?*
+We would love to hear your suggestions, please post on the forums or open an issue on github.
+
+---
+
+### Other script creators
+We've added functionality for other scripts to use Advanced Banking for updating wallets client side.
+* ExileServer_banking_network_buyRequest.sqf
+    * `["buyRequest",["WALLET or BANK",str(AMOUNT_TO_REMOVE)]] call ExileClient_system_network_send;`
+* ExileServer_banking_network_saleRequest.sqf
+    * `["saleRequest",["WALLET or BANK",str(AMOUNT_TO_ADD)]] call ExileClient_system_network_send;`
+
+---
 
 ### Copyright
 Copyright (c) 2016 Shix and Wolfkillarcadia
